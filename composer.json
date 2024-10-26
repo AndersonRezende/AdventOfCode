@@ -1,0 +1,29 @@
+{
+    "name": "anderson/advent-of-code",
+    "description": "My solutions to the advent of code using PHP.",
+    "type": "project",
+    "keywords": ["advent-of-code", "php"],
+    "license": "GNU GENERAL PUBLIC LICENSE",
+    "require": {
+        "php": "^8.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^11.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "AdventOfCode\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "AdventOfCode\\Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Anderson Rezende",
+            "email": "andersonrezende17@hotmail.com"
+        }
+    ]
+}
