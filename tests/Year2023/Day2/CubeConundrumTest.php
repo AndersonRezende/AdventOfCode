@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace AdventOfCode\Tests\Year2023\Day2;
 
 use AdventOfCode\Year2023\Day2\CubeConundrum;
