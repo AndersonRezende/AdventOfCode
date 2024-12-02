@@ -26,5 +26,13 @@ class HistorianHysteria {
         sort($this->locationId[1]);
     }
 
-
+    /** Part 2 */
+    public function sumSimilarityScore(): int {
+        $sum = 0;
+        $arrayValuesCount = array_count_values($this->locationId[1]);
+        foreach ($this->locationId[0] as $value) {
+            $sum += $value * ($arrayValuesCount[$value] ?? 0);
+        }
+        return $sum;
+    }
 }

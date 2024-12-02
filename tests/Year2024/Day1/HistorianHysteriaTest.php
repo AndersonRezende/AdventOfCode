@@ -26,8 +26,7 @@ class HistorianHysteriaTest extends TestCase {
 
     #[DataProvider('dataProviderLocationIdList')]
     public function test_WhenAnInputStringIsGiven_ShouldReturnTheSumOfDistanceBetweenPairs(
-        string $input,
-        int $expected
+        string $input, int $expected
     ): void {
         $historianHysteria = new HistorianHysteria($input);
         $historianHysteriaSumResult = $historianHysteria->sumDistanceBetweenPairs();
@@ -35,4 +34,17 @@ class HistorianHysteriaTest extends TestCase {
         $this->assertEquals($expected, $historianHysteriaSumResult);
     }
 
+    public static function dataProviderSimilarityScore(): Iterator {
+        yield 'Similarity Score' => [self::getInputString(), 31];
+    }
+
+    #[DataProvider('dataProviderSimilarityScore')]
+    public function test_WhenAnInputStringIsGiven_ShouldReturnTheSumOfSimilarityScore(
+        string $input, int $expected
+    ): void {
+        $historianHysteria = new HistorianHysteria($input);
+        $historianHysteriaSimilarityScoreSum = $historianHysteria->sumSimilarityScore();
+
+        $this->assertEquals($expected, $historianHysteriaSimilarityScoreSum);
+    }
 }
