@@ -25,4 +25,19 @@ class MullItOverTest extends TestCase {
 
         $this->assertEquals($expected, $sumOfValidMultiplications);
     }
+
+    public static function dataProviderMemorySectionWithMoreComplexInstructions(): Iterator {
+        yield 'Memory section 1' => ['xmul(2,4)&mul[3,7]!^don\'t()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))', 48];
+    }
+
+    #[DataProvider('dataProviderMemorySectionWithMoreComplexInstructions')]
+    public function test_WhenAnInputStringIsGiven_ShouldReturnTheSumOfValidMultiplicationsWithMoreComplexInstructions(
+        string $input,
+        int $expected
+    ): void {
+        $mullItOver = new MullItOver($input);
+        $sumOfValidMultiplications = $mullItOver->calculateWithNewInstructions();
+
+        $this->assertEquals($expected, $sumOfValidMultiplications);
+    }
 }
