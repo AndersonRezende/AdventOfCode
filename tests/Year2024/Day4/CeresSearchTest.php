@@ -11,9 +11,8 @@ use PHPUnit\Framework\TestCase;
 
 class CeresSearchTest extends TestCase {
 
-    public static function dataProviderInputWords(): Iterator {
-        yield 'Memory section 1' => [
-            'MMMSXXMASM
+    public static function getWordList(): string {
+        return 'MMMSXXMASM
             MSAMXMSMSA
             AMXSXMAAMM
             MSAMASMSMX
@@ -22,7 +21,12 @@ class CeresSearchTest extends TestCase {
             SMSMSASXSS
             SAXAMASAAA
             MAMMMXMMMM
-            MXMXAXMASX',
+            MXMXAXMASX';
+    }
+
+    public static function dataProviderInputWords(): Iterator {
+        yield 'Word list' => [
+            self::getWordList(),
             18
         ];
     }
@@ -34,6 +38,24 @@ class CeresSearchTest extends TestCase {
     ): void {
         $ceresSearch = new CeresSearch($input);
         $xmasWordCount = $ceresSearch->countXmasWords();
+
+        $this->assertEquals($expected, $xmasWordCount);
+    }
+
+    public static function dataProviderInputWordsInXFormatContainingMas(): Iterator {
+        yield 'Word list' => [
+            self::getWordList(),
+            9
+        ];
+    }
+
+    #[DataProvider('dataProviderInputWordsInXFormatContainingMas')]
+    public function test_WhenAnInputStringIsGiven_ShouldReturnTheNumberOfWordsContainingMASInXFormat(
+        string $input,
+        int $expected
+    ): void {
+        $ceresSearch = new CeresSearch($input);
+        $xmasWordCount = $ceresSearch->countMASWordsInXFormat();
 
         $this->assertEquals($expected, $xmasWordCount);
     }
