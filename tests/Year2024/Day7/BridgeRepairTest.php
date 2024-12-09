@@ -14,7 +14,7 @@ class BridgeRepairTest extends TestCase {
     public static function dataProviderMemorySection(): Iterator {
         yield 'Operation 1' => [
             BridgeRepairUtils::getBridgeRepairOperations(),
-            3749
+            11387
         ];
     }
 

@@ -6,7 +6,7 @@ namespace AdventOfCode\Year2024\Day7;
 
 class BridgeRepair {
 
-    private const array OPERATORS = ['+', '*'];
+    private const array OPERATORS = ['+', '*', '|'];
     private array $operationsMap = [];
 
     public function __construct(private readonly string $input) {
@@ -59,7 +59,9 @@ class BridgeRepair {
     private function calculate(int $firstOperator, int $secondOperator, string $operation): int {
         if ($operation === '+') {
             return $firstOperator + $secondOperator;
+        } elseif ($operation === '*') {
+            return $firstOperator * $secondOperator;
         }
-        return $firstOperator * $secondOperator;
+        return intval("$firstOperator"."$secondOperator");
     }
 }
