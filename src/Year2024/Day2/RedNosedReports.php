@@ -47,4 +47,29 @@ class RedNosedReports {
         $distance = abs($level - $levelToCompare);
         return $distance >= 1 && $distance <= 3;
     }
+
+    /** Part 2 */
+    public function calculateSafeReportsWithDampener(): int {
+        $safeReports = 0;
+        foreach ($this->reports as $report) {
+            if ($this->isSafeReport($report)) {
+                $safeReports ++;
+            } elseif ($this->isSafeReportWithDampener($report)) {
+                $safeReports ++;
+            }
+        }
+        return $safeReports;
+    }
+
+    private function isSafeReportWithDampener(array $report): bool {
+        for ($i = 0; $i < count($report); $i++) {
+            $reportToValidate = $report;
+            unset($reportToValidate[$i]);
+            $reportToValidate = array_values($reportToValidate);
+            if ($this->isSafeReport($reportToValidate)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
