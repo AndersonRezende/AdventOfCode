@@ -29,4 +29,19 @@ class DiskFragmenterTest extends TestCase {
 
         $this->assertEquals($expected, $checkSum);
     }
+
+    public static function dataProviderCheckSumWithoutFragmentation(): Iterator {
+        yield 'Checksum 1' => [self::getDiskMap(), 2858];
+    }
+
+    #[DataProvider('dataProviderCheckSumWithoutFragmentation')]
+    public function test_WhenAnInputStringContainingADiskMapIsGiven_ShouldReturnTheChecksumFileSystemWithoutFragmentation(
+        string $input,
+        int $expected
+    ): void {
+        $diskFragmenter = new DiskFragmenter($input);
+        $checkSum = $diskFragmenter->filesystemChecksumWithoutFragmentationCount();
+
+        $this->assertEquals($expected, $checkSum);
+    }
 }
