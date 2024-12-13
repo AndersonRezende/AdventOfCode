@@ -7,19 +7,28 @@ namespace AdventOfCode\Year2024\Day11;
 class PlutonianPebbles {
 
     public function calculateHowManyStonesAfterBlinking(string $originalStonesArrangement, int $blinkingTimes): int {
-        $stonesArrangement = $originalStonesArrangement;
-        for ($i = 1; $i <= $blinkingTimes; $i++) {
-            $stonesArrangement = $this->applyRules($stonesArrangement);
-        }
-        return count(explode(' ', $stonesArrangement));
+        $stonesArrangement = explode(' ', $originalStonesArrangement);
+        return $this->applyRules($stonesArrangement, $blinkingTimes);
     }
 
-    private function applyRules(string $stonesArrangement): string {
-        $newStoneArrangement = '';
-        $stonesArrangementList = explode(' ', $stonesArrangement);
-        foreach ($stonesArrangementList as $stone) {
-            $newStoneArrangement .= StoneRule::applyRule($stone);
+    private function applyRules(array $stonesArrangement, int $blinkingTimes): int {
+        $countItems = 0;
+        foreach ($stonesArrangement as $stone) {
+            $countItems += $this->countArrangementStones(intval($stone), $blinkingTimes - 1);
         }
-        return trim($newStoneArrangement);
+        return $countItems;
+    }
+
+    private function countArrangementStones(int $stonesArrangement, int $blinkingTimes): int {
+        $currentArrangementStones = StoneRule::applyRule($stonesArrangement);
+        if ($blinkingTimes === 0) {
+            return count($currentArrangementStones);
+        }
+
+        $count = 0;
+        foreach ($currentArrangementStones as $stone) {
+            $count += $this->countArrangementStones($stone, $blinkingTimes - 1);
+        }
+        return $count;
     }
 }
