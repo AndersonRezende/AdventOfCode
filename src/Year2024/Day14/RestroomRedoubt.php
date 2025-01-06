@@ -18,6 +18,8 @@ class RestroomRedoubt {
         $this->middleHeight = intdiv($this->height, 2);
     }
 
+    /** Part 1 */
+
     public function calculateSecurityFactorAfterTime(int $time): int {
         $robotsByQuadrant = [0, 0, 0, 0];
         foreach ($this->robots as $robot) {
@@ -29,7 +31,13 @@ class RestroomRedoubt {
             }
         }
 
-        return array_product($robotsByQuadrant);
+        $robotsByQuadrant = array_filter($robotsByQuadrant, function($valor) {
+            return $valor != 0;
+        });
+
+        return array_reduce($robotsByQuadrant, function($carry, $quadrant) {
+            return $carry * $quadrant;
+        }, 1);
     }
 
     private function getRobotFinalPositionAfterTime(array $robot, int $time): array {
@@ -60,5 +68,34 @@ class RestroomRedoubt {
             return 3;
         }
         return -1;
+    }
+
+    /** Part 2 */
+
+    public function getChristmasTree(int $time): void {
+        while ($time > 0) {
+            $map = array_fill(0, $this->height, array_fill(0, $this->width, " "));
+            foreach ($this->robots as $robot) {
+                [$horizontalPosition, $verticalPosition] = $this->getRobotFinalPositionAfterTime($robot, $time);
+                $map[$horizontalPosition][$verticalPosition] = '#';
+            }
+            $this->saveCurrentMatrixState($map, $time);
+            $time--;
+        }
+    }
+
+    private function saveCurrentMatrixState(array $map, int $time): void {
+        $matrix = "$time....................." . PHP_EOL;
+        for ($i = 0; $i < count($map); $i++) {
+            for ($j = 0; $j < count($map[$i]); $j++) {
+                $matrix .= $map[$i][$j];
+            }
+            $matrix .= PHP_EOL . PHP_EOL;
+        }
+
+        $matrix .= str_repeat('-', $this->width) . PHP_EOL;
+        $file = fopen('debug.txt', 'a');
+        fwrite($file, $matrix);
+        fclose($file);
     }
 }
