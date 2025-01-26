@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace AdventOfCode\Year2024\Day6;
+namespace AdventOfCode\Utils;
 
 enum Direction: string {
     case UP = '^';
@@ -20,6 +20,8 @@ enum Direction: string {
                 return self::LEFT;
             case '>':
                 return self::RIGHT;
+            default:
+                throw new \InvalidArgumentException("Invalid direction: $direction");
         }
     }
 

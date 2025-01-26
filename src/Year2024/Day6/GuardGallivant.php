@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace AdventOfCode\Year2024\Day6;
 
+use AdventOfCode\Utils\Direction;
+
 class GuardGallivant {
 
     private array $arrayMap = [];
